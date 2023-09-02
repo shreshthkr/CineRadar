@@ -1,11 +1,12 @@
 import React from 'react'
 import {Routes, Route} from "react-router-dom"
-import Homepage from '../Pages/Homepage';
-import Movies from '../Pages/Movies';
-import TvShows from '../Pages/TvShows';
-import Login from '../Pages/Login';
-import Favourite from '../Pages/Favourite';
-import DetailsPage from "../Pages/DetailsPage"
+import DetailsPage from '../Pages/DetailsPage/DetailsPage';
+import Favourite from '../Pages/Favourite/Favourite';
+import Homepage from '../Pages/HomePage/Homepage';
+import Login from '../Pages/Login/Login';
+import Movies from '../Pages/Movies/Movies';
+import TvShows from '../Pages/TvShows/TvShows';
+
 const AllRoutes = () => {
   return (
     <Routes>
