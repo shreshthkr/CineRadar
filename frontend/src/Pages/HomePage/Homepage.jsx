@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import axios from "axios";
+import MovieCard from '../../Components/MovieCard';
+import "./HomePage.css";
+
+
 const Homepage = () => {
 
 const [movie, setMovie] = useState([]);
@@ -10,11 +14,16 @@ useEffect(() => {
      .catch(err => console.log(err))
 },[])
 
-
+console.log(movie);
   return (
-    <div>
-      
+    <>
+    <div className='search'>
+
     </div>
+    <div className='trending'>
+     <MovieCard />
+    </div>
+    </>
   )
 }
 
