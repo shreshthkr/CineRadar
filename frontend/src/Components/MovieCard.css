@@ -1,11 +1,11 @@
 .movie-box{
    width: 250px;
-   height: 390px;
+   height: 400px;
    display: flex;
    flex-direction: column;
    align-items: center;
    justify-content: center;
-   gap: -10px;
+   gap: -30px;
    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
    border-radius: 5px;
 }
@@ -16,6 +16,7 @@
 .movie-poster{
     width: 100%;
     height: 78%;
+    margin-top: 10px;
 }
 .movie-poster > img{
     width: 90%;
