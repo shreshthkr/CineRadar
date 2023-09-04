@@ -11,3 +11,7 @@ const popular_movies = "https://api.themoviedb.org/3/movie/popular?language=en-U
 
 
 const toprated_movies = "https://api.themoviedb.org/3/movie/top_rated?language=all&page=1&api_key=2fd01d3e0c9759cbc437d0a1c9de7179"
+
+
+
+export const apiKey = "2fd01d3e0c9759cbc437d0a1c9de7179";
