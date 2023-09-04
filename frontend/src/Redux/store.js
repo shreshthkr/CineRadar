@@ -1,6 +1,6 @@
 import { legacy_createStore, applyMiddleware, combineReducers } from "redux";
-import thunk from "redux-thunk";
 import { reducer as movieReducer } from "./Movie/reducer";
+import thunk from "redux-thunk";
 
 
 const rootReducer = combineReducers({

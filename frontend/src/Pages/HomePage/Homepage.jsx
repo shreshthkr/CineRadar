@@ -10,21 +10,23 @@ const Homepage = () => {
 
 const dispatch = useDispatch();
 const movie = useSelector((store) => {
-  return store.movieReducer
+  return store.movieReducer.movie
 })
 
 useEffect(() => {
      dispatch(getMovie());
 },[dispatch])
 
-console.log(movie);
+
   return (
     <>
     <div className='search'>
 
     </div>
     <div className='trending'>
-     <MovieCard />
+       {movie && movie.map((el) => {
+        return <MovieCard key={el.id} movie={el} />
+       })}
     </div>
     </>
   )

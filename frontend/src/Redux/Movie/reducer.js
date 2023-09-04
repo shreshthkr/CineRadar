@@ -3,8 +3,8 @@ import { GET_MOVIE_ERROR, GET_MOVIE_REQUEST, GET_MOVIE_SUCCESS } from "./actionT
 
 const initialState = {
     isLoading: true,
-    isError: false,
     movie: [],
+    isError: false,
 };
 
 export const reducer = (state=initialState, {type, payload}) => {

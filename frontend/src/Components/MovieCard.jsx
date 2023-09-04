@@ -3,18 +3,22 @@ import "./MovieCard.css";
 
 
 
-const MovieCard = () => {
+const MovieCard = ({movie}) => {
+
+  const releaseDate = new Date(movie.release_date);
+  const dateFormatOptions = { day: '2-digit', month: 'short', year: 'numeric' };
+  const formattedReleaseDate = releaseDate.toLocaleDateString(undefined, dateFormatOptions)
   return (
     <div className='movie-box'>
       <div className='movie-poster'>
-        <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/Af4bXE63pVsb2FtbW8uYIyPBadD.jpg" alt="Indiana Jones" />
+        <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.original_title} />
       </div>
       <div className='movie-info'>
          <div className='movie-title'>
-          <p>Indiana Jones and the Dial of Destiny</p>
+          <p>{movie.title}</p>
          </div>
          <div className='movie-release-date'>
-          <p>28 Jun 2023</p>
+          <p>{formattedReleaseDate}</p>
          </div>
       </div>
     </div>
