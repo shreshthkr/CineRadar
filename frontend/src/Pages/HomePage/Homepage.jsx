@@ -2,7 +2,7 @@ import React, { useEffect} from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import MovieCard from '../../Components/MovieCard';
 import "./HomePage.css";
-import { getMovie } from '../../Redux/Movie/action';
+import { getTrendingMovie } from '../../Redux/Movie/action';
 
 
 
@@ -14,7 +14,7 @@ const movie = useSelector((store) => {
 })
 
 useEffect(() => {
-     dispatch(getMovie());
+     dispatch(getTrendingMovie());
 },[dispatch])
 
 
@@ -23,10 +23,19 @@ useEffect(() => {
     <div className='search'>
 
     </div>
+    <div className='movie'>
+      <div className='trending-heading'>
+        <h1>Trending</h1>
+        <div className='trending-selection'>
+          <p>Movie</p>
+          <p>Tv Show</p>
+        </div>
+      </div>
     <div className='trending'>
        {movie && movie.map((el) => {
         return <MovieCard key={el.id} movie={el} />
        })}
+    </div>
     </div>
     </>
   )
