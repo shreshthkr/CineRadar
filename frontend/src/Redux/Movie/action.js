@@ -1,31 +1,31 @@
 import axios from "axios";
-import { GET_MOVIE_ERROR, GET_MOVIE_REQUEST, GET_MOVIE_SUCCESS } from "./actionType";
+import { GET_TRENDING_MOVIE_ERROR, GET_TRENDING_MOVIE_REQUEST, GET_TRENDING_MOVIE_SUCCESS } from "./actionType";
 import { apiKey } from "../../links";
 
 
 
 
-export const getMovieRequest = () => {
-    return {type:GET_MOVIE_REQUEST}
+export const getTrendingMovieRequest = () => {
+    return {type:GET_TRENDING_MOVIE_REQUEST}
 }
 
 
-export const getMovieSuccess = (payload) => {
-    return {type:GET_MOVIE_SUCCESS, payload}
+export const getTrendingMovieSuccess = (payload) => {
+    return {type:GET_TRENDING_MOVIE_SUCCESS, payload}
 }
 
-export const getMovieError = () => {
-    return {type:GET_MOVIE_ERROR}
+export const getTrendingMovieError = () => {
+    return {type:GET_TRENDING_MOVIE_ERROR}
 }
 
 // fetching trending movie data
-export const getMovie = () => (dispatch) =>{
-    dispatch(getMovieRequest());
-    axios.get(`https://api.themoviedb.org/3/movie/now_playing?language=all&page=1&api_key=${apiKey}`)
+export const getTrendingMovie = () => (dispatch) =>{
+    dispatch(getTrendingMovieRequest());
+    axios.get(`https://api.themoviedb.org/3/trending/movie/day?language=all&api_key=${apiKey}`)
     .then((res) => {
-        dispatch(getMovieSuccess(res.data.results))
+        dispatch(getTrendingMovieSuccess(res.data.results))
     })
     .catch((error) => {
-        dispatch(getMovieError())
+        dispatch(getTrendingMovieError())
     })
 }
