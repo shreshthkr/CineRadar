@@ -6,7 +6,7 @@
 .navbar{
     width: 100%;
     height: 80px;
-    background-color: #12111133;
+    background-color: rgb(3,37,65);
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     display: flex;
     align-items: center;
@@ -15,7 +15,7 @@
     top: 0;
     left: 0;
     right: 0;
-    z-index: -1000;
+    z-index: 1000;
 }
 
 .navbar-1{
@@ -54,7 +54,7 @@
     list-style: none;
     font-size: 15px;
     font-weight: 600;
-    color: black;
+    color: white;
     cursor: pointer;
 }
 .navbar-2{
@@ -81,4 +81,5 @@
 .navbar-2>div>ul>li{
   list-style: none;
   cursor: pointer;
+  color: white;
 }

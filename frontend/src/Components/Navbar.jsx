@@ -31,8 +31,8 @@ const Navbar = () => {
         <div>
           <ul>
             <li><BsBellFill fontSize={"20px"}  /></li>
-            <Link to="/login"><li><RxAvatar fontSize={"22px"} fontWeight={"600"} /></li></Link>
-            <Link to="/favourite"><li><BsFillHeartFill fontSize={"20px"} /></li></Link>  
+            <Link to="/favourite"><li><BsFillHeartFill fontSize={"20px"} color='white' /></li></Link>  
+            <Link to="/login"><li><RxAvatar fontSize={"25px"} fontWeight={"600"} color='white' /></li></Link>
           </ul>
         </div>
         
