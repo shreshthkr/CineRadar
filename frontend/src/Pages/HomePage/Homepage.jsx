@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import MovieCard from '../../Components/MovieCard';
 import "./HomePage.css";
 import { getPopularMovie, getTrendingMovie } from '../../Redux/Movie/action';
-import { getTrendingTvShow } from '../../Redux/Tv Show/action';
+import { getPopularTvShow, getTrendingTvShow } from '../../Redux/Tv Show/action';
 import TvCard from '../../Components/TvCard/TvCard';
 
 
@@ -26,10 +26,14 @@ const popularMovie = useSelector((store) => {
   return store.popularReducer.popularMovie
 })
 
+const populartvShow = useSelector((store) => {
+  return store.popularTvReducer.tvPopular
+})
 useEffect(() => {
      dispatch(getTrendingMovie());
      dispatch(getTrendingTvShow());
      dispatch(getPopularMovie());
+     dispatch(getPopularTvShow());
 },[dispatch])
 
 const handleShowTvData = () => {
@@ -111,6 +115,9 @@ const handlePopularTvShow = () => {
            {!showPopular && popularMovie && popularMovie.map((el) => {
            return <MovieCard key={el.id} movie={el} />
            })}  
+           {showPopular && populartvShow && populartvShow.map((el)=>{
+            return <TvCard key={el.id} tvshow={el} />
+           })}
             </div>   
        </div>
     </div>
@@ -121,8 +128,3 @@ const handlePopularTvShow = () => {
 export default Homepage;
 
 
-/*
-axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=2fd01d3e0c9759cbc437d0a1c9de7179`)
-     .then(res => setMovie(res.data.results))
-     .catch(err => console.log(err))
-*/

@@ -49,7 +49,7 @@ export const getPopularMovieError = () => {
   return { type: GET_POPULAR_MOVIE_ERROR };
 };
 
-// fetching trending movie data
+// fetching popular movie data
 export const getPopularMovie = () => (dispatch) => {
   dispatch(getPopularMovieRequest());
   axios
