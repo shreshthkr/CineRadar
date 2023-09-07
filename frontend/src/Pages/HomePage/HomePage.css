@@ -99,7 +99,7 @@
     background-color: rgb(3,37,65);
 }
 .popular-movie-list>div{
-    width: 99%;
+    width: 90%;
     height: 400px;
     margin: auto;
     display: flex;
