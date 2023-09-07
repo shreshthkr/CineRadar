@@ -3,6 +3,7 @@ import { reducer as movieReducer } from "./Movie/reducer";
 import { popularReducer } from "./Movie/reducer";
 import {reducer as trendingTvreducer} from "./Tv Show/reducer";
 import { popularTvReducer } from "./Tv Show/reducer";
+import { detailReducer } from "./Movie/reducer";
 import thunk from "redux-thunk";
 
 
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
     trendingTvreducer,
     popularReducer,
     popularTvReducer,
+    detailReducer,
 });
 
 

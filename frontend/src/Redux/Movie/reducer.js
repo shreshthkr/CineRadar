@@ -1,4 +1,7 @@
 import {
+  GET_MOVIE_DETAILS_ERROR,
+  GET_MOVIE_DETAILS_REQUEST,
+  GET_MOVIE_DETAILS_SUCCESS,
   GET_MOVIE_ERROR,
   GET_MOVIE_REQUEST,
   GET_MOVIE_SUCCESS,
@@ -67,6 +70,28 @@ export const popularReducer = (
     case GET_POPULAR_MOVIE_SUCCESS:
       return { ...state, isLoading: false, popularMovie: payload };
     case GET_POPULAR_MOVIE_ERROR:
+      return { ...state, isLoading: false, isError: true };
+    default:
+      return state;
+  }
+};
+
+const detailInitialState = {
+  isLoading:true,
+  movieDetail:[],
+  isError:false
+}
+
+export const detailReducer = (
+  state = detailInitialState,
+  { type, payload }
+) => {
+  switch (type) {
+    case GET_MOVIE_DETAILS_REQUEST:
+      return { ...state, isLoading: true };
+    case GET_MOVIE_DETAILS_SUCCESS:
+      return { ...state, isLoading: false, movieDetail: payload };
+    case GET_MOVIE_DETAILS_ERROR:
       return { ...state, isLoading: false, isError: true };
     default:
       return state;
