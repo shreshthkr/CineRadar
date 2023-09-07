@@ -1,5 +1,8 @@
 import axios from "axios";
 import {
+  GET_MOVIE_DETAILS_ERROR,
+  GET_MOVIE_DETAILS_REQUEST,
+  GET_MOVIE_DETAILS_SUCCESS,
   GET_POPULAR_MOVIE_ERROR,
   GET_POPULAR_MOVIE_REQUEST,
   GET_POPULAR_MOVIE_SUCCESS,
@@ -62,5 +65,35 @@ export const getPopularMovie = () => (dispatch) => {
     })
     .catch((error) => {
       dispatch(getPopularMovieError());
+    });
+};
+
+
+export const getMovieDetailsRequest = () => {
+  return {type: GET_MOVIE_DETAILS_REQUEST}
+}
+
+export const getMovieDetailsSuccess = (payload) => {
+  return {type: GET_MOVIE_DETAILS_SUCCESS,payload}
+}
+
+export const getMovieDetailsError = () => {
+  return {type: GET_MOVIE_DETAILS_ERROR}
+}
+
+
+// fetching movie Details
+export const getMovieDetails = (id) => (dispatch) => {
+  dispatch(getMovieDetailsRequest());
+  axios
+    .get(
+      `https://api.themoviedb.org/3/movie/${id}?language=all&api_key=${apiKey}`
+    )
+    .then((res) => {
+      console.log(res.data.results)
+      dispatch(getMovieDetailsSuccess(res.data.results));
+    })
+    .catch((error) => {
+      dispatch(getMovieDetailsError());
     });
 };

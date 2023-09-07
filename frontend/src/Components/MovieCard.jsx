@@ -1,5 +1,6 @@
 import React from "react";
 import "./MovieCard.css";
+import { Link } from "react-router-dom";
 
 const MovieCard = ({ movie }) => {
   const releaseDate = new Date(movie.release_date);
@@ -9,6 +10,7 @@ const MovieCard = ({ movie }) => {
     dateFormatOptions
   );
   return (
+    <Link to={`/movies/${movie.id}`}>
     <div className="movie-box">
       <div className="movie-poster">
         <img
@@ -25,6 +27,7 @@ const MovieCard = ({ movie }) => {
         </div>
       </div>
     </div>
+    </Link>
   );
 };
 
