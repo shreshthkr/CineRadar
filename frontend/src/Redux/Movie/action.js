@@ -90,7 +90,6 @@ export const getMovieDetails = (id) => (dispatch) => {
       `https://api.themoviedb.org/3/movie/${id}?language=all&api_key=${apiKey}`
     )
     .then((res) => {
-      console.log(res.data)
       dispatch(getMovieDetailsSuccess(res.data));
     })
     .catch((error) => {
