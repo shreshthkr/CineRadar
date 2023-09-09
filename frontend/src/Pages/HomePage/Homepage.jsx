@@ -79,9 +79,9 @@ const handlePopularTvShow = () => {
         </div>
       </div>
     <div className='trending'>
-       {!showData && movie && movie.map((el) => {
-        return <MovieCard key={el.id} movie={el} />
-       })}
+       {!showData && movie && movie.map((el,index) => index>=10 && 
+         <MovieCard key={el.id} movie={el} />
+       )}
        {showData && trendTv && trendTv.map((el) => {
         return <TvCard key={el.id} tvshow={el} />
        })}
