@@ -64,7 +64,7 @@ const handlePopularTvShow = () => {
     </div>
     <div className='movie'>
       <div className='trending-heading'>
-        <h1>Trending</h1>
+        <h1>What's Trending</h1>
         <div className='trending-selection'>
           <p onClick={handleShowMovieData}  style={{
                 backgroundColor: selectedOption === 'Movie' ? 'white' : 'transparent',
@@ -79,18 +79,18 @@ const handlePopularTvShow = () => {
         </div>
       </div>
     <div className='trending'>
-       {!showData && movie && movie.map((el,index) => index>=10 && 
+       {!showData && movie && movie.map((el,index) => index<10 && 
          <MovieCard key={el.id} movie={el} />
        )}
-       {showData && trendTv && trendTv.map((el) => {
-        return <TvCard key={el.id} tvshow={el} />
-       })}
+       {showData && trendTv && trendTv.map((el,index) => index<10 &&
+        <TvCard key={el.id} tvshow={el} />
+       )}
     </div>
     </div>
     <div className='popular-movie'>
        <div className='popular-movie-heading'>
         <div className='popular-movie-head'>
-          <h1>Popular</h1>
+          <h1>What's Popular</h1>
           </div>
         <div className='popular-select'>
           <p 

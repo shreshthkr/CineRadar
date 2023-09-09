@@ -14,7 +14,7 @@
     justify-content: center;
 }
 .trending-heading{
-  width: 95%;
+  width: 85%;
   height: auto;
   display: flex;
   align-items: center;
@@ -45,13 +45,13 @@
      
 }
 .trending{
-    width: 95%;
+    width: 85%;
     height: auto;
     margin: auto;
     margin-top: 30px;
     display: grid;
-    grid-template-columns: repeat(6,1fr);
-    row-gap: 15px;
+    grid-template-columns: repeat(5,1fr);
+    gap: 15px;
 }
 .popular-movie{
     width: 100%;
@@ -59,7 +59,7 @@
     margin-top: 50px;
 }
 .popular-movie-heading{
-    width: 95%;
+    width: 85%;
     height: 60px;
     margin: auto;
     display: flex;
