@@ -3,7 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getMovieDetails } from "../../../Redux/Movie/action";
 import styled from "styled-components";
-
+import {BiListUl} from "react-icons/bi";
+import {AiFillHeart,AiFillStar} from "react-icons/ai";
+import {ImBookmark} from "react-icons/im";
 const MovieDetailPage = () => {
   const dispatch = useDispatch();
   const movie = useSelector((store) => {
@@ -16,9 +18,11 @@ const MovieDetailPage = () => {
     dispatch(getMovieDetails(id));
   }, [dispatch, id]);
 
-  const year = movie.release_date.split("-")[0];
-
-
+  const year = movie?.release_date?.split("-")[0];
+  const genres = movie.genres?.map((genre) => genre.name).join(", ");
+  const runtimeHours = Math.floor(movie.runtime / 60);
+  const runtimeMinutes = movie.runtime % 60;
+  const runtimeFormatted = `${runtimeHours}h ${runtimeMinutes}m`;
   return (
     <DIV>
       <div className="movie-details">
@@ -39,17 +43,25 @@ const MovieDetailPage = () => {
                     <h1>{movie.title} </h1>
                     <h1>({year})</h1>
                   </div>
-                  <div>
+                  <div className="movie-stats">
                     {movie.adult ? <p>A</p> : <p>R</p>}
-                    <p>{movie.release_date}</p>
+                    <p>{movie.release_date} ({movie.production_countries[0].iso_3166_1})</p>
                     <ul>
-                      <li></li>
-                      <li></li>
+                      <li>{genres}</li>
+                      <li>{runtimeFormatted}</li>
                     </ul>
                   </div>
                  </div>
                  <div className="external-work">
-                  <div></div>
+                  <div className="wishlist">
+                    <ul>
+                      <li><BiListUl /></li>
+                      <li><AiFillHeart /></li>
+                      <li><ImBookmark /></li>
+                      <li><AiFillStar /></li>
+                    </ul>
+                    
+                  </div>
                   <div></div>
                  </div>
                  <div className="overview">
@@ -139,6 +151,34 @@ const DIV = styled.div`
  }
  .title>h1 + h1{
   font-weight: 500;
+ }
+ .movie-stats{
+  width:60%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 20px;
+ }
+ .movie-stats p{
+    color: #ffff;
+ }
+ .movie-stats>p:first-child{
+   border: 1px solid #ffff;
+   height: 23px;
+   width: 23px;
+   text-align: center;
+   font-weight: 600;
+ }
+ .movie-stats ul{
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
+ }
+ .movie-stats ul li{
+  color: #ffff;
  }
 `;
 
