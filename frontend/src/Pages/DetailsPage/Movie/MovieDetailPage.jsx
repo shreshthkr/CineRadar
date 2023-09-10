@@ -16,20 +16,50 @@ const MovieDetailPage = () => {
     dispatch(getMovieDetails(id));
   }, [dispatch, id]);
 
+  const year = movie.release_date.split("-")[0];
+
+
   return (
     <DIV>
       <div className="movie-details">
         <div className="movie-info">
-          <div className="movie-poster">
+          <div className="movie-poster1">
             <img
               src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
               alt={movie.original_title}
+            
             />
           </div>
           <div className="movie-tile">
             <StyledDetailsSection backgroundImage={movie.backdrop_path}>
-              <div className="movie-title">
-                <h1>{movie.original_title}</h1>
+              <div className="info-container">
+              <div className="movie-detail-box">
+                 <div className="movie-title">
+                  <div className="title">
+                    <h1>{movie.title} </h1>
+                    <h1>({year})</h1>
+                  </div>
+                  <div>
+                    {movie.adult ? <p>A</p> : <p>R</p>}
+                    <p>{movie.release_date}</p>
+                    <ul>
+                      <li></li>
+                      <li></li>
+                    </ul>
+                  </div>
+                 </div>
+                 <div className="external-work">
+                  <div></div>
+                  <div></div>
+                 </div>
+                 <div className="overview">
+                  <div></div>
+                  <div></div>
+                 </div>
+              </div>
+              <div className="directors">
+
+              </div>
               </div>
             </StyledDetailsSection>
           </div>
@@ -60,25 +90,56 @@ const DIV = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    
+    gap: 30px;
     
   }
-  .movie-poster {
-    width: 18%;
-    height: 80%;
+  .movie-poster1{
+    width: 350px;
+    height: 450px;
     position: relative;
     left: 40px;
-
   }
-  .movie-poster>img{
+  .movie-poster1>img{
     width: 100%;
     height: 100%;
-
+    border-radius: 5px;
   }
   .movie-tile {
-    width: 80%;
+    width: 85%;
     height: 100%;
   }
+  .info-container{
+    width: 90%;
+    border:2px solid yellow;
+    margin: auto;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .movie-detail-box{
+  width:90%;
+  height: 90%;
+  border:2px solid white;
+  margin-top: 35px;
+
+  
+ }
+ .title{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 5px
+ }
+ .title>h1{
+  font-size: 34px;
+  font-weight: 700;
+  color: #ffff;
+  font-family: "Source Sans Pro",Arial,sans-serif;
+ }
+ .title>h1 + h1{
+  font-weight: 500;
+ }
 `;
 
 //backgroundImage={movie.backdrop_path}
@@ -88,13 +149,5 @@ width: 100%;
   background-image: linear-gradient(to bottom right, rgba(31.5, 10.5, 10.5, 1), rgba(31.5, 10.5, 10.5, 0.84)), url(${(props) => `https://image.tmdb.org/t/p/w500${props.backgroundImage}`});
   background-size: cover;
   background-repeat: no-repeat;
-  border: none;
-
-
- .movie-title{
-  border:2px solid white;
-  
- }
-
 `
 
