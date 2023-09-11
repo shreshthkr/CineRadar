@@ -1,5 +1,4 @@
 import axios from "axios";
-import { apiKey } from "../../links";
 import {
   GET_POPULAR_TV_SHOW_ERROR,
   GET_POPULAR_TV_SHOW_REQUEST,
@@ -8,6 +7,8 @@ import {
   GET_TRENDING_TV_SHOW_REQUEST,
   GET_TRENDING_TV_SHOW_SUCCESS,
 } from "./actionType";
+
+const apiKey = process.env.REACT_APP_API_KEY
 
 export const getTrendingTvShowRequest = () => {
   return { type: GET_TRENDING_TV_SHOW_REQUEST };

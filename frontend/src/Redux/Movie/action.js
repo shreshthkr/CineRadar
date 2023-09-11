@@ -10,7 +10,9 @@ import {
   GET_TRENDING_MOVIE_REQUEST,
   GET_TRENDING_MOVIE_SUCCESS,
 } from "./actionType";
-import { apiKey } from "../../links";
+
+
+const apiKey = process.env.REACT_APP_API_KEY
 
 export const getTrendingMovieRequest = () => {
   return { type: GET_TRENDING_MOVIE_REQUEST };
@@ -32,6 +34,7 @@ export const getTrendingMovie = () => (dispatch) => {
       `https://api.themoviedb.org/3/trending/movie/day?language=all&api_key=${apiKey}`
     )
     .then((res) => {
+      
       dispatch(getTrendingMovieSuccess(res.data.results));
     })
     .catch((error) => {
@@ -60,7 +63,7 @@ export const getPopularMovie = () => (dispatch) => {
       `https://api.themoviedb.org/3/movie/popular?language=all&api_key=${apiKey}`
     )
     .then((res) => {
-      console.log(res.data.results)
+      
       dispatch(getPopularMovieSuccess(res.data.results));
     })
     .catch((error) => {
