@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getMovieDetails } from "../../../Redux/Movie/action";
 import styled from "styled-components";
-import {BiListUl} from "react-icons/bi";
+import {BiListUl, BiPlay} from "react-icons/bi";
 import {AiFillHeart,AiFillStar} from "react-icons/ai";
 import {ImBookmark} from "react-icons/im";
 const MovieDetailPage = () => {
@@ -13,6 +13,9 @@ const MovieDetailPage = () => {
   });
   const params = useParams();
   const { id } = params;
+  const [director, setDirector] = useState([]);
+  const [writer, setWriter] = useState([]);
+  const [screenPlay, setScreenPlay] = useState([])
 
   useEffect(() => {
     dispatch(getMovieDetails(id));
@@ -45,7 +48,7 @@ const MovieDetailPage = () => {
                   </div>
                   <div className="movie-stats">
                     {movie.adult ? <p>A</p> : <p>R</p>}
-                    <p>{movie.release_date} ({movie.production_countries[0].iso_3166_1})</p>
+                    <p>{movie.release_date}</p>
                     <ul>
                       <li>{genres}</li>
                       <li>{runtimeFormatted}</li>
@@ -59,18 +62,25 @@ const MovieDetailPage = () => {
                       <li><AiFillHeart /></li>
                       <li><ImBookmark /></li>
                       <li><AiFillStar /></li>
+                      <li><BiPlay color="white"/> Play Trailer</li>
                     </ul>
                     
                   </div>
-                  <div></div>
+                  <div className="movie-tagline">
+                    <p>{movie.tagline}</p>
+                  </div>
                  </div>
-                 <div className="overview">
-                  <div></div>
-                  <div></div>
+                 <div className="overview-box">
+                  <div className="overview-heading">
+                    <h2>Overview</h2>
+                  </div>
+                  <div className="overview">
+                    <p>{movie.overview}</p>
+                  </div>
                  </div>
               </div>
               <div className="directors">
-
+                   
               </div>
               </div>
             </StyledDetailsSection>
@@ -180,9 +190,87 @@ const DIV = styled.div`
  .movie-stats ul li{
   color: #ffff;
  }
+ .external-work{
+   width: 65%;
+   height: auto;
+   display: flex;
+   flex-direction: column;
+   align-items: flex-start;
+   justify-content: center;
+   gap: 40px;
+ }
+ .wishlist{
+  width: 100%;
+  height: auto;
+  margin-top: 20px;
+ }
+ .wishlist>ul{
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   gap: 30px;
+ }
+ .wishlist>ul>li{
+  list-style: none;
+  color:#ffff;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  padding: 18px;
+  background-color: rgb(3,37,65);
+  cursor: pointer;
+ }
+ .wishlist>ul>li:last-child{
+  width:150px;
+  display: flex;
+   align-items: center;
+   justify-content: center;
+   gap: 15px;
+   list-style: none;
+   border: none;
+   background-color: transparent;
+
+ }
+ .movie-tagline{
+    width: 100%;
+    height: auto;
+ }
+ .movie-tagline>p{
+  color: #ffff;
+  font-size: 16.5px;
+  font-style: Italic;
+  font-family: "Source Sans Pro",Arial,sans-serif;
+ }
+ .overview-box{
+  width:100%;
+  height: auto;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 15px;
+ }
+ .overview-heading>h2{
+  font-size: 20px;
+  font-weight: 600;
+  font-family:"Source Sans Pro",Arial,sans-serif;
+  color: #ffff;
+  display: block;
+ }
+ .overview{
+  width: 100%;
+  height: auto;
+ }
+ .overview>p{
+  color: #ffff;
+  font-size: 15px;
+  font-family:"Source Sans Pro",Arial,sans-serif ;
+  font-weight: 500;
+ }
 `;
 
-//backgroundImage={movie.backdrop_path}
+
 const StyledDetailsSection = styled.div`
 width: 100%;
   height: 100%;
