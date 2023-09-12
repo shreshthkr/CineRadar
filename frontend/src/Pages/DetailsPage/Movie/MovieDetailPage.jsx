@@ -6,6 +6,8 @@ import styled from "styled-components";
 import {BiListUl, BiPlay} from "react-icons/bi";
 import {AiFillHeart,AiFillStar} from "react-icons/ai";
 import {ImBookmark} from "react-icons/im";
+import axios from "axios";
+
 const MovieDetailPage = () => {
   const dispatch = useDispatch();
   const movie = useSelector((store) => {
@@ -14,18 +16,33 @@ const MovieDetailPage = () => {
   const params = useParams();
   const { id } = params;
   const [director, setDirector] = useState([]);
-  const [writer, setWriter] = useState([]);
-  const [screenPlay, setScreenPlay] = useState([])
+  const [casting, setCasting] = useState([]);
+  const [producer, setProducer] = useState([])
 
   useEffect(() => {
     dispatch(getMovieDetails(id));
+    axios.get(`https://api.themoviedb.org/3/movie/${id}/credits?language=all&api_key=${process.env.REACT_APP_API_KEY}`)
+    .then((res) => {
+      const credits = res.data.crew;
+      const directorData = credits.find((member) => member.job === 'Director');
+      const producerData = credits.find((member) => member.job === 'Producer');
+        const castingData = credits.find((member) => member.job === 'Casting');
+        setDirector(directorData);
+        setCasting(castingData);
+        setProducer(producerData);
+    })
+    .catch((error) => {
+      console.log(error);
+    })
   }, [dispatch, id]);
 
+  console.log(director.name)
   const year = movie?.release_date?.split("-")[0];
   const genres = movie.genres?.map((genre) => genre.name).join(", ");
   const runtimeHours = Math.floor(movie.runtime / 60);
   const runtimeMinutes = movie.runtime % 60;
   const runtimeFormatted = `${runtimeHours}h ${runtimeMinutes}m`;
+  
   return (
     <DIV>
       <div className="movie-details">
@@ -78,10 +95,22 @@ const MovieDetailPage = () => {
                     <p>{movie.overview}</p>
                   </div>
                  </div>
+                   <div className="crew-members">
+                   <div className="director">
+                     <h3>{director?.name}</h3>
+                      <p>{director?.job}</p>
+                   </div>
+                   <div className="producer">
+                   <h3>{producer?.name}</h3>
+                      <p>{producer?.job}</p>
+                   </div>
+                   <div className="casting">
+                   <h3>{casting?.name}</h3>
+                      <p>{casting?.job}</p>
+                   </div>
               </div>
-              <div className="directors">
-                   
               </div>
+            
               </div>
             </StyledDetailsSection>
           </div>
@@ -132,17 +161,16 @@ const DIV = styled.div`
   }
   .info-container{
     width: 90%;
-    border:2px solid yellow;
     margin: auto;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    
   }
   .movie-detail-box{
   width:90%;
   height: 90%;
-  border:2px solid white;
   margin-top: 35px;
 
   
@@ -268,13 +296,38 @@ const DIV = styled.div`
   font-family:"Source Sans Pro",Arial,sans-serif ;
   font-weight: 500;
  }
+ .crew-members{
+  width:50% ;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  
+ }
+ .crew-members h3{
+  font-size: 15px;
+   color: white;
+   font-weight: 500;
+   font-family:"Source Sans Pro",Arial,sans-serif ;
+ }
+ .crew-members p{
+  color: white;
+  font-weight: 500;
+ }
+ .director, .producer, .casting{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+   
+ }
 `;
 
 
 const StyledDetailsSection = styled.div`
 width: 100%;
   height: 100%;
-  background-image: linear-gradient(to bottom right, rgba(31.5, 10.5, 10.5, 1), rgba(31.5, 10.5, 10.5, 0.84)), url(${(props) => `https://image.tmdb.org/t/p/w500${props.backgroundImage}`});
+  background-image: linear-gradient( to bottom right, rgba(31.5, 10.5, 10.5, 1), rgba(31.5, 10.5, 10.5, 0.84)), url(${(props) => `https://image.tmdb.org/t/p/w500${props.backgroundImage}`});
   background-size: cover;
   background-repeat: no-repeat;
 `
