@@ -24,6 +24,7 @@ const MovieDetailPage = () => {
   const [director, setDirector] = useState([]);
   const [casting, setCasting] = useState([]);
   const [producer, setProducer] = useState([]);
+  const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
     dispatch(getMovieDetails(id));
@@ -48,6 +49,14 @@ const MovieDetailPage = () => {
       .catch((error) => {
         console.log(error);
       });
+      axios.get(`https://api.themoviedb.org/3/movie/${id}/reviews?language=all&page=1&api_key=${process.env.REACT_APP_API_KEY}`)
+      .then((response) => {
+        setReviews(response.data.results)
+        console.log(response.data.results)
+      })
+      .catch((err)=>{
+        console.log(err);
+      })
   }, [dispatch, id]);
 
   const year = movie?.release_date?.split("-")[0];
@@ -162,10 +171,11 @@ const MovieDetailPage = () => {
                <h1>Reviews</h1>
           </div>
           <div className="movie-reviews">
-          <ReviewCard />
+             {reviews.length>0 ? reviews?.map((e,index)=> index<1 && <ReviewCard key={e.id} review={e} />) : <p className="no-review">We don't have any reviews</p>}
           </div>
           <div className="all-review">
-            <p>Read all Reviews <FaArrowRight fontWeight={"600"} /></p>
+           {reviews.length>0 && <p>Read all Reviews <FaArrowRight fontWeight={"600"} />
+           </p>}
           </div>
           
         </div>
@@ -394,7 +404,6 @@ const CAST = styled.div`
   height: 700px;
   margin: auto;
   margin-top: 30px;
-  border: 2px solid black;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -412,7 +421,6 @@ const CAST = styled.div`
   .cast-details {
     width: 100%;
     height: 350px;
-    border: 2px solid teal;
   }
   .cast-sidebar {
     width: 20%;
@@ -483,12 +491,10 @@ const CAST = styled.div`
   width: 100%;
   height: auto;
   margin-top: 20px;
-  border:2px solid teal;
  }
  .review-heading{
   width:100%;
   height: 40px;
-  border: 1px solid black;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -501,8 +507,7 @@ const CAST = styled.div`
  }
  .movie-reviews{
   width:100% ;
-  height: 230px;
-  border: 2px solid red;
+  height: 180px;
  }
  .all-review{
    width: 95%;
@@ -519,5 +524,10 @@ const CAST = styled.div`
   justify-content: center;
   gap: 10px;
   cursor: pointer;
+ }
+ .no-review{
+  font-size:18px;
+  font-weight:600;
+  font-family: "Source Sans Pro", Arial, sans-serif;
  }
 `;
