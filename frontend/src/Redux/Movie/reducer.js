@@ -1,4 +1,7 @@
 import {
+  GET_MOVIE_CAST_ERROR,
+  GET_MOVIE_CAST_REQUEST,
+  GET_MOVIE_CAST_SUCCESS,
   GET_MOVIE_DETAILS_ERROR,
   GET_MOVIE_DETAILS_REQUEST,
   GET_MOVIE_DETAILS_SUCCESS,
@@ -97,3 +100,24 @@ export const detailReducer = (
       return state;
   }
 };
+
+
+const castInitialState = {
+  isLoading:true,
+  cast:[],
+  isError:false
+}
+
+
+export const castReducer = (state=castInitialState,{type, payload}) => {
+  switch (type) {
+    case GET_MOVIE_CAST_REQUEST:
+      return { ...state, isLoading: true };
+    case GET_MOVIE_CAST_SUCCESS:
+      return { ...state, isLoading: false, cast: payload };
+    case GET_MOVIE_CAST_ERROR:
+      return { ...state, isLoading: false, isError: true };
+    default:
+      return state;
+  }
+}

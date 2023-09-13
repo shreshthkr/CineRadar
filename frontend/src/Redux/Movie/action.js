@@ -1,5 +1,8 @@
 import axios from "axios";
 import {
+  GET_MOVIE_CAST_ERROR,
+  GET_MOVIE_CAST_REQUEST,
+  GET_MOVIE_CAST_SUCCESS,
   GET_MOVIE_DETAILS_ERROR,
   GET_MOVIE_DETAILS_REQUEST,
   GET_MOVIE_DETAILS_SUCCESS,
@@ -99,3 +102,29 @@ export const getMovieDetails = (id) => (dispatch) => {
       dispatch(getMovieDetailsError());
     });
 };
+
+
+//! fetching cast data
+export const getCastRequest = () => {
+  return {type: GET_MOVIE_CAST_REQUEST}
+}
+
+export const getCastSuccess = (payload) => {
+  return {type: GET_MOVIE_CAST_SUCCESS, payload}
+}
+
+export const getCastError = () => {
+  return {type: GET_MOVIE_CAST_ERROR}
+}
+
+
+export const getMovieCast = (id) => (dispatch) => {
+    dispatch(getCastRequest());
+    axios.get(`https://api.themoviedb.org/3/movie/${id}/credits?language=all&api_key=${apiKey}`)
+    .then((res) => {
+      dispatch(getCastSuccess(res.data.cast));
+    })
+    .catch((err)=>{
+      dispatch(getCastError())
+    })
+}
