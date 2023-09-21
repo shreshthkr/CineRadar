@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { getMovieCast, getMovieDetails } from "../../../Redux/Movie/action";
 import styled from "styled-components";
 import { BiListUl, BiPlay } from "react-icons/bi";
@@ -49,14 +49,17 @@ const MovieDetailPage = () => {
       .catch((error) => {
         console.log(error);
       });
-      axios.get(`https://api.themoviedb.org/3/movie/${id}/reviews?language=all&page=1&api_key=${process.env.REACT_APP_API_KEY}`)
+    axios
+      .get(
+        `https://api.themoviedb.org/3/movie/${id}/reviews?language=all&page=1&api_key=${process.env.REACT_APP_API_KEY}`
+      )
       .then((response) => {
-        setReviews(response.data.results)
-        console.log(response.data.results)
+        setReviews(response.data.results);
+        console.log(response.data.results);
       })
-      .catch((err)=>{
+      .catch((err) => {
         console.log(err);
-      })
+      });
   }, [dispatch, id]);
 
   const year = movie?.release_date?.split("-")[0];
@@ -147,38 +150,49 @@ const MovieDetailPage = () => {
       </div>
       <CAST>
         <div className="info-side">
-        <div className="cast-details">
-          <div className="casts">
-            <div className="cast-heading">
-              <h1>Top Billed Cast</h1>
-            </div>
-            <div className="movie-cast1">
-              {cast &&
-                cast?.map(
-                  (el, index) =>
-                    index < 10 && <CastCard key={el.id} cast={el} />
-                )}
+          <div className="cast-details">
+            <div className="casts">
+              <div className="cast-heading">
+                <h1>Top Billed Cast</h1>
+              </div>
+              <div className="movie-cast1">
+                {cast &&
+                  cast?.map(
+                    (el, index) =>
+                      index < 10 && <CastCard key={el.id} cast={el} />
+                  )}
                 <div className="view-more">
-                  
-                  <p>View More <FaArrowRight fontWeight={"600"} /></p>
-                  
+                  <p>
+                    View More <FaArrowRight fontWeight={"600"} />
+                  </p>
                 </div>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="review-section">
-          <div className="review-heading">
-               <h1>Reviews</h1>
+          <div className="review-section">
+            <div className="review-heading">
+              <h1>Reviews</h1>
+            </div>
+            <div className="movie-reviews">
+              {reviews.length > 0 ? (
+                reviews?.map(
+                  (e, index) =>
+                    index < 1 && <ReviewCard key={e.id} review={e} />
+                )
+              ) : (
+                <p className="no-review">
+                  We don't have any reviews for {movie.title}
+                </p>
+              )}
+            </div>
+            <div className="all-review">
+              {reviews.length > 0 && (
+                <p>
+                  Read all Reviews <FaArrowRight fontWeight={"600"} />
+                </p>
+              )}
+            </div>
           </div>
-          <div className="movie-reviews">
-             {reviews.length>0 ? reviews?.map((e,index)=> index<1 && <ReviewCard key={e.id} review={e} />) : <p className="no-review">We don't have any reviews for {movie.title}</p>}
-          </div>
-          <div className="all-review">
-           {reviews.length>0 && <p>Read all Reviews <FaArrowRight fontWeight={"600"} />
-           </p>}
-          </div>
-          
-        </div>
         </div>
         <div className="cast-sidebar"></div>
       </CAST>
@@ -198,7 +212,6 @@ const DIV = styled.div`
     height: 100%;
     margin: auto;
     background-color: rgb(32 11 11);
-    
   }
   .movie-info {
     width: 100%;
@@ -409,15 +422,14 @@ const CAST = styled.div`
   align-items: center;
   justify-content: space-between;
 
-.info-side{
-   width: 78%;
-   height: 100%;
+  .info-side {
+    width: 78%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
-    
-}
+  }
   .cast-details {
     width: 100%;
     height: 350px;
@@ -444,89 +456,88 @@ const CAST = styled.div`
     font-family: "Source Sans Pro", Arial, sans-serif;
   }
   .movie-cast1 {
-  width: 100%;
-  height: 260px;
-  display: flex;
-  align-items: center;
-  justify-content:flex-start;
-  gap: 18px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  flex-wrap: nowrap;
-  white-space: nowrap; 
-}
+    width: 100%;
+    height: 260px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 18px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+  }
 
-.movie-cast1::-webkit-scrollbar {
-  height: 8px;
-}
+  .movie-cast1::-webkit-scrollbar {
+    height: 8px;
+  }
 
-.movie-cast1::-webkit-scrollbar-track {
-  background-color: rgba(255, 255, 255, 0.768);
-}
+  .movie-cast1::-webkit-scrollbar-track {
+    background-color: rgba(255, 255, 255, 0.768);
+  }
 
-.movie-cast1::-webkit-scrollbar-thumb {
-  border-radius: 8px;
-  background: gray;
-}
-.view-more{
-  width: 135px;
-  height: 250px;
-  margin: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: 0 0 auto;
-
-}
-.view-more>p{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  font-family: "Source Sans Pro", Arial, sans-serif;
-  cursor: pointer;
-}
- .review-section{
-  width: 100%;
-  height: auto;
-  margin-top: 20px;
- }
- .review-heading{
-  width:100%;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap:10px;
- }
- .review-heading>h1{
-  font-size: 18px;
-  font-weight: 700;
-  font-family: "Source Sans Pro", Arial, sans-serif;
- }
- .movie-reviews{
-  width:100% ;
-  height: 180px;
- }
- .all-review{
-   width: 95%;
-   height: 50px;
-   margin: auto;
-   display: flex;
-  align-items: center;
-  justify-content: flex-start;
- }
- .all-review>p{
-   font-weight: 600;
-   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  cursor: pointer;
- }
- .no-review{
-  font-size:18px;
-  font-weight:600;
-  font-family: "Source Sans Pro", Arial, sans-serif;
- }
+  .movie-cast1::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background: gray;
+  }
+  .view-more {
+    width: 135px;
+    height: 250px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+  }
+  .view-more > p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-family: "Source Sans Pro", Arial, sans-serif;
+    cursor: pointer;
+  }
+  .review-section {
+    width: 100%;
+    height: auto;
+    margin-top: 20px;
+  }
+  .review-heading {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+  }
+  .review-heading > h1 {
+    font-size: 18px;
+    font-weight: 700;
+    font-family: "Source Sans Pro", Arial, sans-serif;
+  }
+  .movie-reviews {
+    width: 100%;
+    height: 180px;
+  }
+  .all-review {
+    width: 95%;
+    height: 50px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .all-review > p {
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+  }
+  .no-review {
+    font-size: 18px;
+    font-weight: 600;
+    font-family: "Source Sans Pro", Arial, sans-serif;
+  }
 `;
