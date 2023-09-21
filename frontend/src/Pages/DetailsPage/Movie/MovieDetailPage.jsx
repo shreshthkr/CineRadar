@@ -171,7 +171,7 @@ const MovieDetailPage = () => {
                <h1>Reviews</h1>
           </div>
           <div className="movie-reviews">
-             {reviews.length>0 ? reviews?.map((e,index)=> index<1 && <ReviewCard key={e.id} review={e} />) : <p className="no-review">We don't have any reviews</p>}
+             {reviews.length>0 ? reviews?.map((e,index)=> index<1 && <ReviewCard key={e.id} review={e} />) : <p className="no-review">We don't have any reviews for {movie.title}</p>}
           </div>
           <div className="all-review">
            {reviews.length>0 && <p>Read all Reviews <FaArrowRight fontWeight={"600"} />
@@ -198,6 +198,7 @@ const DIV = styled.div`
     height: 100%;
     margin: auto;
     background-color: rgb(32 11 11);
+    
   }
   .movie-info {
     width: 100%;
@@ -391,8 +392,8 @@ const StyledDetailsSection = styled.div`
   height: 100%;
   background-image: linear-gradient(
       to bottom right,
-      rgba(31.5, 10.5, 10.5, 1),
-      rgba(31.5, 10.5, 10.5, 0.84)
+      rgba(31.5, 10.5, 10.5, 0.9),
+      rgba(31.5, 10.5, 10.5, 0.7)
     ),
     url(${(props) => `https://image.tmdb.org/t/p/w500${props.backgroundImage}`});
   background-size: cover;
@@ -415,7 +416,6 @@ const CAST = styled.div`
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
-  border: 2px solid red;
     
 }
   .cast-details {
@@ -425,7 +425,6 @@ const CAST = styled.div`
   .cast-sidebar {
     width: 20%;
     height: 100%;
-    border: 2px solid red;
   }
   .casts {
     width: 100%;
