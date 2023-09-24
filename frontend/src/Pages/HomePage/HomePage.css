@@ -29,7 +29,7 @@
 .trending-selection {
   display: flex;
   width: 200px;
-  height: 24px;
+  height: 27px;
   border: 1px solid rgb(57, 57, 57);
   align-items: center;
   justify-content: space-around;
@@ -39,6 +39,7 @@
 .trending-selection > p {
   cursor: pointer;
   width: 50%;
+  height: 24px;
   text-align: center;
   border-radius: 25px;
   font-weight: 600;
@@ -74,7 +75,7 @@
 .popular-select {
   display: flex;
   width: 200px;
-  height: 24px;
+  height: 27px;
   border: 1px solid rgb(57, 57, 57);
   align-items: center;
   justify-content: space-around;
@@ -84,6 +85,7 @@
 .popular-select > p {
   cursor: pointer;
   width: 50%;
+  height: 24px;
   text-align: center;
   border-radius: 25px;
   font-weight: 600;

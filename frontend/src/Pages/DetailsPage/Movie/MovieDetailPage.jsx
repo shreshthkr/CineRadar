@@ -468,8 +468,7 @@ const DIV = styled.div`
     align-items: flex-start;
     justify-content: center;
   }
-  .cast-details {
-  }
+  
 `;
 
 const StyledDetailsSection = styled.div`
@@ -619,7 +618,6 @@ const CAST = styled.div`
   .cast-sidebar>div{
      width:95%;
      height:95%;
-     border:1px solid black;
     
 
      
@@ -628,7 +626,6 @@ const CAST = styled.div`
   .movie-social-lin{
      width:95%;
      height:50px;
-     border:1px solid red;
      margin:auto;
      background-color:#ffff;
   }
