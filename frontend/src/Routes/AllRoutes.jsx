@@ -7,6 +7,7 @@ import Movies from '../Pages/Movies/Movies';
 import TvShows from '../Pages/TvShows/TvShows';
 import MovieDetailPage from '../Pages/DetailsPage/Movie/MovieDetailPage';
 import TvShowDetailPage from '../Pages/DetailsPage/TV/TvShowDetailPage';
+import Signup from '../Pages/Login/Signup';
 
 const AllRoutes = () => {
   return (
@@ -17,6 +18,7 @@ const AllRoutes = () => {
       <Route path='/tvshows' element={<TvShows />} />
       <Route path='/tvshows/:id' element={<TvShowDetailPage />}/>
       <Route path='/login' element={<Login />} />
+      <Route path='/signup' element={<Signup/>} />
       <Route path='/favourite' element={<Favourite />} />
     </Routes>
   )
