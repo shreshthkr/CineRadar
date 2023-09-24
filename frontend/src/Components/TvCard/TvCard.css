@@ -1,5 +1,6 @@
 .tvshow-box{
     min-width: 200px;
+   max-width: 200px;
     height: 350px;
     display: flex;
     flex-direction: column;

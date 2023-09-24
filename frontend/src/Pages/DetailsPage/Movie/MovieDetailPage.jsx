@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { getMovieCast, getMovieDetails } from "../../../Redux/Movie/action";
 import styled from "styled-components";
 import { BiListUl, BiPlay } from "react-icons/bi";
+import { BsLink } from "react-icons/bs";
 import { AiFillHeart, AiFillStar } from "react-icons/ai";
 import { ImBookmark } from "react-icons/im";
 import { FaArrowRight } from "react-icons/fa6";
 import axios from "axios";
+import { Tooltip } from "@chakra-ui/react";
 import CastCard from "../../../Components/CastCard/CastCard";
 import ReviewCard from "../../../Components/ReviewCard";
 
@@ -25,6 +27,7 @@ const MovieDetailPage = () => {
   const [casting, setCasting] = useState([]);
   const [producer, setProducer] = useState([]);
   const [reviews, setReviews] = useState([]);
+  const [keywords, setKeywords] = useState([]);
 
   useEffect(() => {
     dispatch(getMovieDetails(id));
@@ -55,18 +58,46 @@ const MovieDetailPage = () => {
       )
       .then((response) => {
         setReviews(response.data.results);
-        console.log(response.data.results);
       })
       .catch((err) => {
         console.log(err);
       });
   }, [dispatch, id]);
 
+  useEffect(() => {
+    axios
+      .get(
+        `https://api.themoviedb.org/3/movie/${id}/keywords?language=all&api_key=${process.env.REACT_APP_API_KEY}`
+      )
+      .then((res) => {
+        setKeywords(res.data.keywords);
+        console.log(res.data.keywords);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  //  console.log(movie.budget)
   const year = movie?.release_date?.split("-")[0];
   const genres = movie.genres?.map((genre) => genre.name).join(", ");
   const runtimeHours = Math.floor(movie.runtime / 60);
   const runtimeMinutes = movie.runtime % 60;
   const runtimeFormatted = `${runtimeHours}h ${runtimeMinutes}m`;
+
+  const budget = movie?.budget
+    ? movie.budget.toLocaleString("en-US", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      })
+    : "-";
+
+  const revenue = movie?.revenue
+    ? movie.revenue.toLocaleString("en-US", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      })
+    : "-";
 
   return (
     <DIV>
@@ -194,7 +225,48 @@ const MovieDetailPage = () => {
             </div>
           </div>
         </div>
-        <div className="cast-sidebar"></div>
+        <div className="cast-sidebar">
+          <div>
+            <div className="movie-social-lin">
+              <Link to={movie.homepage}>
+                <BsLink fontSize={"30px"} fontWeight={700} cursor={"pointer"} />
+              </Link>
+            </div>
+            <hr />
+            <div className="movie-side-info">
+              <div className="movie-status">
+                <h2>Status</h2>
+                <p>{movie.status}</p>
+              </div>
+              <div className="movie-language">
+                <h2>Original Language</h2>
+                {movie.spoken_languages?.map((language) => (
+                  <p key={language.iso_639_1}>{language.english_name}</p>
+                ))}
+              </div>
+              <div className="movie-status">
+                <h2>Budget</h2>
+                <p>${budget}</p>
+              </div>
+              <div className="movie-status">
+                <h2>Revenue</h2>
+                <p>${revenue}</p>
+              </div>
+            </div>
+            <div className="movie-keywords">
+              <div>
+                <h2>Keywords</h2>
+                
+              </div>
+
+              <div className="keywords">
+                {keywords?.map((el) => (
+                  <p key={el.id}>{el.name}</p>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
       </CAST>
     </DIV>
   );
@@ -405,8 +477,8 @@ const StyledDetailsSection = styled.div`
   height: 100%;
   background-image: linear-gradient(
       to bottom right,
-      rgba(31.5, 10.5, 10.5, 0.9),
-      rgba(31.5, 10.5, 10.5, 0.7)
+      rgba(25.5, 8.5, 8.5, 0.9),
+      rgba(25.5, 8.5, 8.5, 0.7)
     ),
     url(${(props) => `https://image.tmdb.org/t/p/w500${props.backgroundImage}`});
   background-size: cover;
@@ -434,10 +506,7 @@ const CAST = styled.div`
     width: 100%;
     height: 350px;
   }
-  .cast-sidebar {
-    width: 20%;
-    height: 100%;
-  }
+ 
   .casts {
     width: 100%;
     height: 300px;
@@ -539,5 +608,103 @@ const CAST = styled.div`
     font-size: 18px;
     font-weight: 600;
     font-family: "Source Sans Pro", Arial, sans-serif;
+  }
+  .cast-sidebar {
+    width: 22%;
+    height: 100%;
+    display:flex;
+    align-items:flex-start;
+    justify-content:flex-end;
+  }
+  .cast-sidebar>div{
+     width:95%;
+     height:95%;
+     border:1px solid black;
+    
+
+     
+  }
+  
+  .movie-social-lin{
+     width:95%;
+     height:50px;
+     border:1px solid red;
+     margin:auto;
+     background-color:#ffff;
+  }
+  .movie-side-info{
+     width:95;
+     height:auto;
+     margin:auto;
+     display:flex;
+     flex-direction: column;
+     align-items:flex-start;
+
+  }
+  .movie-status{
+    height:60px;
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    justify-content:center;
+  }
+  .movie-status>h2{
+     font-weight:600;
+     font-size:17px;
+     font-family: "Source Sans Pro", Arial, sans-serif;
+  }
+  .movie-status>p{
+    font-size:16px;
+    font-family: "Source Sans Pro", Arial, sans-serif;
+  }
+  .movie-language{
+    height:auto;
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    justify-content:center;
+  }
+  .movie-language>h2{
+     font-weight:600;
+     font-size:17px;
+     font-family: "Source Sans Pro", Arial, sans-serif;
+  }
+  .movie-language>p{
+    font-size:16px;
+    font-family: "Source Sans Pro", Arial, sans-serif;
+  }
+  .movie-keywords{
+    height:auto;
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    justify-content:center;
+  }
+  .movie-keywords>div>h2{
+    font-weight:600;
+    font-size:17px;
+    font-family: "Source Sans Pro", Arial, sans-serif;
+  }
+  .keywords{
+    width:85%;
+    height:auto;
+    display:flex;
+    flex-wrap:wrap;
+    gap:5px;
+    
+  }
+  .keywords>p{
+    padding:2px;
+    border:1px solid rgb(216,216,216);
+    border-radius:5px;
+    font-size:15px;
+    font-family: "Source Sans Pro", Arial, sans-serif;
+    background-color:rgb(229,229,229);
+  }
+  .keywords>p:hover{
+    cursor:pointer;
   }
 `;
